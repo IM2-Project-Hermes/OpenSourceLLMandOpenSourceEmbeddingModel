@@ -67,7 +67,7 @@ def create_collection_with_sample_data():
     ]
 
     # Initialize the text splitter
-    text_splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=10)
+    text_splitter = CharacterTextSplitter(chunk_size=200, chunk_overlap=10)
     texts = []
 
     for file_path in file_paths:
