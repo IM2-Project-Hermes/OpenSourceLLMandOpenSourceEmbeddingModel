@@ -1,16 +1,9 @@
-import os
 from langchain.llms import HuggingFacePipeline
-import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline, AutoModelForSeq2SeqLM
-import time
-from langchain import PromptTemplate, HuggingFaceHub, LLMChain
-from langchain.chains import RetrievalQAWithSourcesChain
 import chromadb
 from chromadb.config import Settings
 from dotenv import load_dotenv
 import os
-from langchain.vectorstores import Chroma
-from chromadb.utils import embedding_functions
 from langchain.embeddings import HuggingFaceEmbeddings
 
 
@@ -61,19 +54,6 @@ def ask_llm(question):
     )
 
     collection = chroma_client.get_collection(name="documents")
-
-
-    template = """
-    Given the following extracted parts of a long document and a question, create a final answer with references ("SOURCES").
-    If you don't know the answer, just say that you don't know. Don't try to make up an answer.
-    ALWAYS return a "SOURCES" part in your answer.
-    Answer the question: {question} based on this data: {summaries}
-    """
-
-    template = """
-    {question}
-    summarize: {summaries}
-    """
 
     documents = collection.query(
         query_texts=[question],
